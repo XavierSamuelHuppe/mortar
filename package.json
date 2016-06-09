@@ -1,0 +1,23 @@
+{
+  "name": "mortar",
+  "version": "1.0.0",
+  "description": "This is an awesome game server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XavierSamuelHuppe/mortar.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/XavierSamuelHuppe/mortar/issues"
+  },
+  "homepage": "https://github.com/XavierSamuelHuppe/mortar#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.4.6"
+  }
+}
