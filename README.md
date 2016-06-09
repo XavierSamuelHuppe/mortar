@@ -10,6 +10,6 @@ $npm start
 -include mortarClient.js in html  
 
 use fonctions of mortarClient in project:  
--connect() at creation  
--updateMyPosition(x, y) at every game loop  
--  
+-mortarConnect() at creation  
+-mortarUpdateMyPosition(x, y) at every game loop  
+-loop "allTanks" for all tanks positions every game loop  
