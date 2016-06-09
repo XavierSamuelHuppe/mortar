@@ -9,7 +9,7 @@ $npm start
 -include socket.io script in .html  
 -include mortarClient.js in html  
 
-use fonctions of mortarClient in project:
+use fonctions of mortarClient in project:  
 -connect() at creation  
 -updateMyPosition(x, y) at every game loop  
 -  
