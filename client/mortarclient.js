@@ -1,12 +1,16 @@
 
-var mortarClient = {
-	socket: null,
-	players: {},
-	sandbags: [],
-	onPlayerJoinedCallback: null,
-	onPlayerLeftCallback: null,
-	onTankDestroyedCallback: null,
+var socket = null;
+var players = {};
+var sandbags = [];
+var onPlayerJoinedCallback = null;
+var onPlayerLeftCallback = null;
+var onTankDestroyedCallback = null;
+var allPlayersCalls = 0;
+var stateNotificationCalls = 0;
+var previousTime = 0;
+var statistics = { allPlayersPs: 0, stateNotificationPs: 0};
 
+var mortarClient = {
 	joinGame: function (host = "localhost", name, callback, callbackContext) {
 		socket = io.connect('http://'+ host +':3000');
 		socket.on('connect', function () {
@@ -24,6 +28,7 @@ var mortarClient = {
 
   		socket.on('allPlayers', function (allPlayers){
 			players = allPlayers;
+			allPlayersCalls++;
   		});
 
   		socket.on('playerJoined', function (player){
@@ -46,6 +51,21 @@ var mortarClient = {
   		});
 	},
 
+	updateStats: function(time) {
+		if(time > previousTime + 1000) {			
+			statistics.allPlayersPs = Math.round((allPlayersCalls * 1000) / (time - previousTime));
+			statistics.stateNotificationPs = Math.round((stateNotificationCalls * 1000) / (time - previousTime));
+
+			previousTime = time;
+			allPlayersCalls = 0;
+			stateNotificationCalls = 0;
+		} 
+	},
+
+	getStats: function() {
+		return statistics;
+	},
+
 	onPlayerJoined: function(callback, callbackContext) {
 		onPlayerJoinedCallback = {callback: callback, context: callbackContext};
 	},
@@ -59,6 +79,7 @@ var mortarClient = {
 	},
 
 	notifyState: function(state) {
+		stateNotificationCalls++;
 		socket.emit('newState', state);
 	},
 
