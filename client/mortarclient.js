@@ -8,7 +8,8 @@ var onTankDestroyedCallback = null;
 var allPlayersCalls = 0;
 var stateNotificationCalls = 0;
 var previousTime = 0;
-var statistics = { allPlayersPs: 0, stateNotificationPs: 0};
+var statistics = { allPlayersPs: 0, stateNotificationPs: 0, rtt: 0};
+var startPingTime = 0;
 
 var mortarClient = {
 	joinGame: function (host = "localhost", name, callback, callbackContext) {
@@ -49,6 +50,17 @@ var mortarClient = {
 				onTankDestroyedCallback.callback.call(onTankDestroyedCallback.context, playerId);
 			}
   		});
+
+  		function ping() {  
+			startPingTime = Date.now();
+	  		socket.emit('ping', function() {
+	  			statistics.rtt = Date.now() - startPingTime;
+	  		});
+		};
+
+		ping();
+
+		setInterval(ping, 2000);    		               
 	},
 
 	updateStats: function(time) {

@@ -60,6 +60,10 @@ io.on('connection', function(socket){
     }    
   });
 
+  socket.on('ping', function (ack) {
+        ack();
+  });
+
   socket.on('sandbagDestroy', function(id){
     console.log('One sandbag Destroyed... : ' + id);
     sandbagStates[id] = false;
@@ -69,4 +73,4 @@ io.on('connection', function(socket){
 // emit 20 times per second
 setInterval(function(){  
   io.emit('allPlayers', players);
-}, 1000/60);  
+}, 1000/40);  
