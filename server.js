@@ -18,10 +18,10 @@ function init() {
 init();
 
 io.on('connection', function(socket){  
-  socket.on('join', function(name, ack){
-    console.log('New layer! : ' + socket.id + ', ' + name);
+  socket.on('join', function(params, ack){
+    console.log('New layer! : ' + socket.id + ', ' + params.name);
 
-    aNewTank = {id: socket.id, playerNumber: playerCount, name: name, tankState: null, ufcCount: 0, ufcPs: 0, ufcMissed: 0, ufcReceived: false, ufcTotalMissed: 0};
+    aNewTank = {id: socket.id, playerNumber: playerCount, name: params.name, tankClass: params.tankClass, tankState: null, ufcCount: 0, ufcPs: 0, ufcMissed: 0, ufcReceived: false, ufcTotalMissed: 0};
     players[socket.id] = aNewTank;        
 
     var joinAckState ={ playerId: socket.id, players: players, sandbagStates : sandbagStates };    
